@@ -7,8 +7,8 @@ class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     username: str = Field(index=True, unique=True, max_length=50)
     email: str = Field(unique=True, max_length=100)
-    password: str  # هش‌شده ذخیره شود
-    role: str = Field(default="Reader", max_length=20)  # نقش: Admin, Author, Reader
+    password: str
+    role: str = Field(default="Reader", max_length=20)  # role: Admin, Author, Reader
     created_at: Optional[str] = Field(default=None)
     name: str = Field(max_length=200)
     last_name: str = Field(max_length=200)
@@ -21,7 +21,7 @@ class Post(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     title: str = Field(max_length=200)
     content: str
-    tags: str = Field(max_length=255)  # جداشده با کاما
+    tags: str = Field(max_length=255)  # format with ,
     author_id: int = Field(foreign_key="user.id")
     created_at: Optional[str] = Field(default=None)
     updated_at: Optional[str] = Field(default=None)
