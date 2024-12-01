@@ -31,7 +31,7 @@ def get_comments(post_id: int, session: Session = Depends(get_session), user=Dep
     user_role = check_role(user, ["Admin", "Author"])
     get_post_by_id(session, post_id)
     if user_role is True:
-        comments = get_comments_by_post(session, post_id)
+        comments = get_comments_by_post(session, post_id,user.role,user.id)
     else:
         raise HTTPException(status_code=403, detail="Permission denied")
     return {"comments": comments}
@@ -42,8 +42,8 @@ def get_comments(post_id: int, session: Session = Depends(get_session), user=Dep
 def edit_comment(comment_id: int, content: str, session: Session = Depends(get_session),
                  user=Depends(get_current_user)):
     user_role = check_role(user, ["Admin"])
-    comment = get_comment_by_id(session, comment_id)
     if user_role is True:
+        comment = get_comment_by_id(session, comment_id)
         updated_comment = update_comment(session, comment, content)
         return {"message": "Comment updated successfully", "comment": updated_comment}
     return {"message": "Permission denied"}
@@ -54,8 +54,8 @@ def edit_comment(comment_id: int, content: str, session: Session = Depends(get_s
 def delete_comment_route(comment_id: int, session: Session = Depends(get_session),
                          user=Depends(get_current_user)):
     user_role = check_role(user, ["Admin"])
-    comment = get_comment_by_id(session, comment_id)
     if user_role is True:
+        comment = get_comment_by_id(session, comment_id)
         delete_comment(session, comment)
     else:
         raise HTTPException(status_code=403, detail="Permission denied")
