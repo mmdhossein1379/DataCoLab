@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
+from fastapi import HTTPException
 from sqlalchemy.orm import aliased
 from sqlmodel import Session, select, cast, DateTime
 
@@ -27,7 +28,10 @@ def get_posts(session: Session, skip: int = 0, limit: int = 10, filters: dict = 
 
 
 def get_post_by_id(session: Session, post_id: int):
-    return session.query(Post).filter(Post.id == post_id).first()
+    post = session.query(Post).filter(Post.id == post_id).first()
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return post
 
 
 def update_post(session: Session, post_id: int, title: str = None, content: str = None, tags=None):
@@ -52,17 +56,6 @@ def delete_post(session: Session, post_id: int):
         session.commit()
         return True
     return False
-
-
-def create_comment(session: Session, comment_data: Comment):
-    session.add(comment_data)
-    session.commit()
-    session.refresh(comment_data)
-    return comment_data
-
-
-def get_comments_for_post(session: Session, post_id: int):
-    return session.query(Comment).filter(Comment.post_id == post_id).all()
 
 
 def get_all_users(session: Session):
@@ -108,3 +101,38 @@ def get_all_posts(
                                "last_name": last_name}
         posts_with_author.append(post_dict)
     return posts_with_author
+
+
+# comments
+def create_comment(session: Session, post_id: int, content: str, author_id: int):
+    new_comment = Comment(content=content, post_id=post_id, author_id=author_id)
+    session.add(new_comment)
+    session.commit()
+    session.refresh(new_comment)
+    return new_comment
+
+
+def get_comments_by_post(session: Session, post_id: int):
+    return session.query(Comment).filter(Comment.post_id == post_id).all()
+
+
+def get_comments_by_post_and_author(session: Session, post_id: int, author_id: int):
+    return session.query(Comment).filter(Comment.post_id == post_id, Comment.author_id == author_id).all()
+
+
+def get_comment_by_id(session: Session, comment_id: int):
+    comment = session.query(Comment).filter(Comment.id == comment_id).first()
+    if not comment:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    return comment
+
+
+def update_comment(session: Session, comment, content: str):
+    comment.content = content
+    session.commit()
+    session.refresh(comment)
+    return comment
+
+def delete_comment(session: Session, comment):
+    session.delete(comment)
+    session.commit()
