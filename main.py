@@ -3,7 +3,6 @@ from database import create_db_and_tables
 from models import User, Post, Comment
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
-from crud import create_post, get_posts, get_post_by_id, update_post, delete_post, create_comment, get_comments_for_post
 from database import get_session
 from typing import Optional
 from routes import posts, comments, users
