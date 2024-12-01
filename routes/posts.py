@@ -11,7 +11,6 @@ from crud import create_post, get_all_posts, get_post_by_id, update_post, delete
 router = APIRouter()
 
 
-# ایجاد یک پست جدید
 @router.post("/")
 def create_new_post(title: str, content: str, tags: str, session: Session = Depends(get_session),
                     user=Depends(get_current_user)):
@@ -21,7 +20,6 @@ def create_new_post(title: str, content: str, tags: str, session: Session = Depe
     return {"message": "Post created successfully", "post": created_post}
 
 
-# دریافت لیست پست‌ها با صفحه‌بندی و فیلتر
 @router.get("/")
 def get_posts(page: int, page_size: int,
               date_from: Optional[datetime] = None,
@@ -44,7 +42,6 @@ def get_posts(page: int, page_size: int,
     return posts
 
 
-# دریافت جزئیات یک پست خاص
 @router.get("/{post_id}/")
 def get_post(post_id: int, session: Session = Depends(get_session)):
     post = get_post_by_id(session, post_id)
@@ -53,7 +50,6 @@ def get_post(post_id: int, session: Session = Depends(get_session)):
     return post
 
 
-# ویرایش یک پست
 @router.put("/{post_id}/")
 def update_existing_post(post_id: int, title: str = None, content: str = None, tags: str = None,
                          session: Session = Depends(get_session), user=Depends(get_current_user)):
@@ -62,11 +58,10 @@ def update_existing_post(post_id: int, title: str = None, content: str = None, t
         raise HTTPException(status_code=404, detail="Post not found")
     if user.id != post.author_id and user.role != "Admin":
         raise HTTPException(status_code=403, detail="Permission denied")
-    updated_post = update_post(session, post, title, content, tags)
+    updated_post = update_post(session, post_id, title, content, tags)
     return {"message": "Post updated successfully", "post": updated_post}
 
 
-# حذف یک پست
 @router.delete("/{post_id}/")
 def delete_existing_post(post_id: int, session: Session = Depends(get_session), user=Depends(get_current_user)):
     post = get_post_by_id(session, post_id)
