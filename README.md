@@ -42,7 +42,6 @@ conn = psycopg2.connect(
             password=DATABASE_PASSWORD,
             host=DATABASE_HOST,
             port=DATABASE_PORT,
-            charset='utf8mb4'
         )
 ```
 
@@ -70,3 +69,7 @@ for test api
 http://127.0.0.1:8000/docs
 ```
 
+if you like add member i handle and you run create for you admin and author and reader
+```bash
+python add_user.py
+```
