@@ -50,8 +50,16 @@ conn = psycopg2.connect(
 ```bash
 pip install -r requirements.txt
 ```
+5- Create secret key
+```bash
+ $ python secret.py
+```
+and copy in .env
+```bash
+SECRET_KEY= "YOUR SECRET_KEY"
+```
 
-5- Run the development server:
+6- Run the development server:
 ```bash
 uvicorn main:app --reload
 ```
