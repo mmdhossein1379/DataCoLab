@@ -2,8 +2,11 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from sqlmodel import SQLModel, create_engine, Session
 from constants import *
+if DOCKER_MODE:
+    DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{"db"}:5432/{DATABASE_NAME}"
+else:
+    DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_PORT}/{DATABASE_NAME}"
 
-DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
 engine = create_engine(DATABASE_URL, echo=True)
 
 
