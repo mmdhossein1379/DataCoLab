@@ -17,7 +17,6 @@ def create_database_if_not_exists():
             password=DATABASE_PASSWORD,
             host=DATABASE_HOST,
             port=DATABASE_PORT,
-            charset='utf8mb4'
         )
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cursor = conn.cursor()
