@@ -73,3 +73,35 @@ if you like add member i handle and you run create for you admin and author and 
 ```bash
 python add_user.py
 ```
+
+```Docker```
+in first go to constants.py
+```bash
+DOCKER_MODE = True
+```
+for build Dockerfile
+```bash
+docker build -t <YOUR NAME APP> . 
+```
+and
+```bash
+docker run -p 8000:8000 <YOUR NAME APP>
+```
+you use docker-compose for run. i suggest this way for docker
+```bash
+docker-compose up --build 
+```
+
+if you add member for test
+1-
+```bash
+docker ps -a  
+```
+2-
+```bash
+docker exec -it <app_container_name> bash
+```
+3- create add user with this
+```bash
+python add_user.py 
+```
