@@ -26,15 +26,16 @@ $ python3 -m venv venv
 $ . venv/bin/activate
 ```
 ### 3- In *database.py* set up the your database:
-For your convenience, the variables are inside the constants.py file
+#### For your convenience, the variables are inside the *constants.py* file
 
 ```bash
-DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
+DATABASE_NAME = ""
+DATABASE_USER = ""
+DATABASE_PASSWORD = ""
+DATABASE_HOST = ""
+DATABASE_PORT = "5432"
 ```
-## and
-```bash
-DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
-```
+#### in *database.py:*
 ```bash
 conn = psycopg2.connect(
             dbname="postgres",
@@ -57,22 +58,23 @@ pip install -r requirements.txt
 ```bash
 SECRET_KEY= "YOUR SECRET_KEY"
 ```
+#### if you like add member i handle and you run create for you admin and author and reader
+```bash
+python add_user.py
+```
 
 ### 6- Run the development server:
 ```bash
 uvicorn main:app --reload
 ```
-Open http://127.0.0.1:8000 in your browser.
+##### open http://127.0.0.1:8000 in your browser.
 
 ### for test api 
 ```bash
 http://127.0.0.1:8000/docs
 ```
 
-#### if you like add member i handle and you run create for you admin and author and reader
-```bash
-python add_user.py
-```
+
 
 # Docker
 ### in first go to *constants.py*
