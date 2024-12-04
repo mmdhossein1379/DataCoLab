@@ -53,7 +53,7 @@ pip install -r requirements.txt
 ```bash
  $ python secret.py
 ```
-### and copy in *.env*
+### and copy secret key in *.env*
 ```bash
 SECRET_KEY= "YOUR SECRET_KEY"
 ```
@@ -119,3 +119,24 @@ docker exec -it <app_container_name> bash
 ```bash
 python add_user.py 
 ```
+# Test
+### 1- go to project file
+```bash
+cd test
+```
+#### if you work with unittest
+```bash
+pytest unit_test.py
+```
+#### if you work with integration.py
+```bash
+pytest integration.py
+```
+
+# pictures project
+## for authentication
+![Alt Text](picture/aurh.png)
+## for use with post Api
+![Alt Text](picture/post.png)
+## for use with comment Api
+![Alt Text](picture/comment.png)
