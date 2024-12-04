@@ -88,7 +88,8 @@ def get_all_posts(
     if date_from:
         query = query.where(cast(Post.created_at, DateTime) >= date_from)
     if date_to:
-        query = query.where(cast(Post.created_at, DateTime+ timedelta(days=1)) <= date_to)
+        date_to = date_to + timedelta(days=1)
+        query = query.where(cast(Post.created_at, DateTime) < date_to)
     if tags:
         query = query.where(Post.tags.contains(tags))
     if keyword:
