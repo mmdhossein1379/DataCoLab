@@ -27,7 +27,6 @@ def get_posts(page: int, page_size: int,
               keyword: Optional[str] = None,
               author_id: Optional[int] = None,
               session: Session = Depends(get_session)):
-
     posts = get_all_posts(
         session=session,
         page=page,
@@ -50,8 +49,8 @@ def get_post(post_id: int, session: Session = Depends(get_session)):
 def update_existing_post(post_id: int, title: str = None, content: str = None, tags: str = None,
                          session: Session = Depends(get_session), user=Depends(get_current_user)):
     get_post_by_id(session, post_id)
-    check_role(user, ["Admin","Author"])
-    updated_post = update_post(session, post_id, title, content, tags)
+    check_role(user, ["Admin", "Author"])
+    updated_post = update_post(session, post_id, user.role, title, content, tags)
     return {"message": "Post updated successfully", "post": updated_post}
 
 

@@ -34,8 +34,11 @@ def get_post_by_id(session: Session, post_id: int):
     return post
 
 
-def update_post(session: Session, post_id: int, title: str = None, content: str = None, tags=None):
-    post = session.query(Post).filter(Post.id == post_id).first()
+def update_post(session: Session, post_id: int,role, title: str = None, content: str = None, tags=None):
+    if role == "Admin":
+        post = session.query(Post).filter(Post.id == post_id).first()
+    else:
+        post = session.query(Post).filter(Post.id == post_id, Post.author_id == author_id).first()
     fields_to_update = {
         "title": title,
         "content": content,
