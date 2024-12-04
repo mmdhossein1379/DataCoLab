@@ -34,11 +34,15 @@ def get_post_by_id(session: Session, post_id: int):
     return post
 
 
-def update_post(session: Session, post_id: int,role, title: str = None, content: str = None, tags=None):
+def update_post(session: Session, post_id: int, role,author_id, title: str = None, content: str = None, tags=None):
     if role == "Admin":
         post = session.query(Post).filter(Post.id == post_id).first()
     else:
         post = session.query(Post).filter(Post.id == post_id, Post.author_id == author_id).first()
+        if not post:
+            return {"message": "Permission denied. This post does not belong to you."}
+        else:
+            post = post
     fields_to_update = {
         "title": title,
         "content": content,
@@ -151,6 +155,7 @@ def update_comment(session: Session, comment, content: str):
     session.commit()
     session.refresh(comment)
     return comment
+
 
 def delete_comment(session: Session, comment):
     session.delete(comment)

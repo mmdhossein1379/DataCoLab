@@ -50,7 +50,7 @@ def update_existing_post(post_id: int, title: str = None, content: str = None, t
                          session: Session = Depends(get_session), user=Depends(get_current_user)):
     get_post_by_id(session, post_id)
     check_role(user, ["Admin", "Author"])
-    updated_post = update_post(session, post_id, user.role, title, content, tags)
+    updated_post = update_post(session, post_id, user.role,user.id, title, content, tags)
     return {"message": "Post updated successfully", "post": updated_post}
 
 
