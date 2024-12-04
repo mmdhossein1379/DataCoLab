@@ -25,7 +25,7 @@ Linux:
 $ python3 -m venv venv
 $ . venv/bin/activate
 ```
-### 3- In database.py set up the your database:
+### 3- In *database.py* set up the your database:
 For your convenience, the variables are inside the constants.py file
 
 ```bash
@@ -53,7 +53,7 @@ pip install -r requirements.txt
 ```bash
  $ python secret.py
 ```
-### and copy in .env
+### and copy in *.env*
 ```bash
 SECRET_KEY= "YOUR SECRET_KEY"
 ```
@@ -74,12 +74,12 @@ http://127.0.0.1:8000/docs
 python add_user.py
 ```
 
-```Docker```
-### in first go to constants.py
+# Docker
+### in first go to *constants.py*
 ```bash
 DOCKER_MODE = True
 ```
-#### go to docker_compose.yml
+#### go to *docker_compose.yml*
 ```bash
   db:
     image: postgres:15
@@ -97,16 +97,16 @@ DOCKER_MODE = True
       timeout: 5s
       retries: 5
 ```
-**for build Dockerfile** 
+### for build Dockerfile
 ```bash
 docker build -t <YOUR NAME APP> . 
 ```
-#### you use docker-compose for run. i suggest this way for docker
+#### you use *docker-compose* for run. i suggest this way for docker
 ```bash
 docker-compose up --build 
 ```
 
-if you add member for test
+#### if you add member for test
 ### 1-
 ```bash
 docker ps -a  
