@@ -1,11 +1,11 @@
-DataCoLab Api
+# DataCoLab Api
 
-How to Run?
-1- Clone the repository:
+#### How to Run?
+### 1- Clone the repository:
 ```bash
  $ git clone https://github.com/mmdhossein1379/DataCoLab.git
  ```
- or use SSH
+### or use SSH
 ```bash
  $ git clone git@github.com:mmdhossein1379/DataCoLab.git
  ```
@@ -14,7 +14,7 @@ next
  $ cd DataCoLab
 ```
 
-2- Create a virtualenv and activate it:
+### 2- Create a virtualenv and activate it:
 ```bash
 Windows:
 py -3 -m venv venv
@@ -25,13 +25,13 @@ Linux:
 $ python3 -m venv venv
 $ . venv/bin/activate
 ```
-3- In database.py set up the your database:
+### 3- In database.py set up the your database:
 For your convenience, the variables are inside the constants.py file
 
 ```bash
 DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
 ```
-and
+## and
 ```bash
 DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
 ```
@@ -45,63 +45,77 @@ conn = psycopg2.connect(
         )
 ```
 
-4- Install the requirements :
+### 4- Install the requirements :
 ```bash
 pip install -r requirements.txt
 ```
-5- Create secret key
+### 5- Create secret key
 ```bash
  $ python secret.py
 ```
-and copy in .env
+### and copy in .env
 ```bash
 SECRET_KEY= "YOUR SECRET_KEY"
 ```
 
-6- Run the development server:
+### 6- Run the development server:
 ```bash
 uvicorn main:app --reload
 ```
 Open http://127.0.0.1:8000 in your browser.
 
-for test api 
+### for test api 
 ```bash
 http://127.0.0.1:8000/docs
 ```
 
-if you like add member i handle and you run create for you admin and author and reader
+#### if you like add member i handle and you run create for you admin and author and reader
 ```bash
 python add_user.py
 ```
 
 ```Docker```
-in first go to constants.py
+### in first go to constants.py
 ```bash
 DOCKER_MODE = True
 ```
-for build Dockerfile
+#### go to docker_compose.yml
+```bash
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: "YOUR_USER"
+      POSTGRES_PASSWORD: "YOUR_PASSWORD"
+      POSTGRES_DB: "YOUR_NAME_DB"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U YOUR_USER" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+```
+**for build Dockerfile** 
 ```bash
 docker build -t <YOUR NAME APP> . 
 ```
-and
-```bash
-docker run -p 8000:8000 <YOUR NAME APP>
-```
-you use docker-compose for run. i suggest this way for docker
+#### you use docker-compose for run. i suggest this way for docker
 ```bash
 docker-compose up --build 
 ```
 
 if you add member for test
-1-
+### 1-
 ```bash
 docker ps -a  
 ```
-2-
+### 2-
 ```bash
 docker exec -it <app_container_name> bash
 ```
-3- create add user with this
+### 3- create add user with this
 ```bash
 python add_user.py 
 ```
