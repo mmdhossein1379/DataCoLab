@@ -51,7 +51,8 @@ def update_existing_post(post_id: int, title: str = None, content: str = None, t
     get_post_by_id(session, post_id)
     check_role(user, ["Admin", "Author"])
     updated_post = update_post(session, post_id, user.role,user.id, title, content, tags)
-    return {"message": "Post updated successfully", "post": updated_post}
+
+    return {"message": "Post updated successfully", "post": updated_post} if updated_post else {"message": "not permission"}
 
 
 @router.delete("/{post_id}/")
