@@ -3,7 +3,6 @@ import sys
 import os
 import pytest
 from datetime import datetime
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 from models import Comment, User, User
 from crud import *
@@ -36,6 +35,7 @@ def test_create_new_comment():
     assert response.json()["message"] == "Comment added successfully"
     assert "comment" in response.json()
 
+
 def test_edit_comment():
     token = get_auth_token()
     headers = {"Authorization": f"Bearer {token}"}
@@ -45,6 +45,8 @@ def test_edit_comment():
     )
     assert response.status_code == 200
     assert response.json()["message"] == "Comment updated successfully"
+
+
 def test_get_comments():
     token = get_auth_token()
     headers = {"Authorization": f"Bearer {token}"}
@@ -53,23 +55,19 @@ def test_get_comments():
     assert "comments" in response.json()
 
 
-
-
-
-# def test_delete_comment():
-#     token = get_auth_token()
-#     headers = {"Authorization": f"Bearer {token}"}
-#     response = client.delete("/comments/1/", headers=headers)
-#     assert response.status_code == 200
-#     assert response.json()["message"] == "Comment deleted successfully"
+def test_delete_comment():
+    token = get_auth_token()
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.delete("/comments/2/", headers=headers)
+    assert response.status_code == 200
+    assert response.json()["message"] == "Comment deleted successfully"
 
 
 def test_create_new_post():
     token = get_auth_token()
     headers = {"Authorization": f"Bearer {token}"}
     response = client.post(
-        "/posts/",
-        json={"title": "Updated Title", "content": "Updated Content", "tags": "updated,example","author_id":2}
+        "/posts/?title=UpdatedTitle&content=UpdatedContent&tags=updated,example&author_id=2"
         , headers=headers
     )
     assert response.status_code == 200
@@ -95,7 +93,7 @@ def test_update_existing_post():
     headers = {"Authorization": f"Bearer {token}"}
     response = client.put(
         "/posts/9/",
-        json={"title": "Updated Title", "content": "Updated Content", "tags": "updated,example","author_id":2}
+        json={"title": "Updated Title", "content": "Updated Content", "tags": "updated,example", "author_id": 2}
         , headers=headers
 
     )
@@ -104,8 +102,8 @@ def test_update_existing_post():
     assert "post" in response.json()
 
 # def test_delete_existing_post():
-#     token = get_auth_token()
-#     headers = {"Authorization": f"Bearer {token}"}
-#     response = client.delete("/posts/1/", headers=headers)
-#     assert response.status_code == 200
-#     assert response.json()["message"] == "Post deleted successfully"
+    token = get_auth_token()
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.delete("/posts/10/", headers=headers)
+    assert response.status_code == 200
+    assert response.json()["message"] == "Post deleted successfully"
