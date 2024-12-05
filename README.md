@@ -3,15 +3,15 @@
 #### How to Run?
 ### 1- Clone the repository:
 ```bash
- $ git clone https://github.com/mmdhossein1379/DataCoLab.git
+git clone https://github.com/mmdhossein1379/DataCoLab.git
  ```
 ### or use SSH
 ```bash
- $ git clone git@github.com:mmdhossein1379/DataCoLab.git
+git clone git@github.com:mmdhossein1379/DataCoLab.git
  ```
 next 
 ```bash
- $ cd DataCoLab
+cd DataCoLab
 ```
 
 ### 2- Create a virtualenv and activate it:
@@ -52,15 +52,11 @@ pip install -r requirements.txt
 ```
 ### 5- Create secret key
 ```bash
- $ python secret.py
+python secret.py
 ```
 ### and copy secret key in *.env*
 ```bash
 SECRET_KEY= "YOUR SECRET_KEY"
-```
-#### if you like add member i handle and you run create for you admin and author and reader
-```bash
-python add_user.py
 ```
 
 ### 6- Run the development server:
@@ -73,7 +69,10 @@ uvicorn main:app --reload
 ```bash
 http://127.0.0.1:8000/docs
 ```
-
+#### if you like add member i handle and you run create for you admin and author and reader
+```bash
+python add_user.py
+```
 
 
 # Docker
@@ -81,7 +80,7 @@ http://127.0.0.1:8000/docs
 ```bash
 DOCKER_MODE = True
 ```
-#### go to *docker_compose.yml*
+#### go to *docker_compose.yml* user and password and db_name same with cosntants.py
 ```bash
   db:
     image: postgres:15
